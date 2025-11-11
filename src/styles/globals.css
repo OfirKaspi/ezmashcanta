@@ -1,0 +1,199 @@
+/* ------------- CSS CUSTOM PROPERTIES (DESIGN TOKENS) ------------- */
+
+@layer base {
+
+  /* === LIGHT THEME ================================================= */
+  :root {
+    --background:           0   0% 100%;
+    --foreground:           222 47% 11%;
+
+    --card:                 0   0% 100%;
+    --card-foreground:      var(--foreground);
+
+    --popover:              0   0% 100%;
+    --popover-foreground:   var(--foreground);
+
+    --primary:              155 45% 55%;  /* Soft Mint/Sage Green */
+    --primary-foreground:   0   0% 100%;
+
+    --secondary:            145 50% 50%;  /* Complementary Green */
+    --secondary-foreground: 0   0% 100%;
+
+    --muted:                150 25% 97%;  /* Very Light Green Tint */
+    --muted-foreground:     222  8% 45%;
+
+    --muted-custom:         150 25% 97%;  /* Very Light Green Tint */
+
+    --accent:               160 55% 50%;  /* Accent Green */
+    --accent-foreground:    0   0% 100%;
+
+    --destructive:          346 77% 48%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border:               150 20% 92%;  /* Light Green Tint */
+    --input:                var(--border);
+    --ring:                 var(--primary);
+
+    --cta-gradient-start:   #6BAF8E;  /* Soft Green */
+    --cta-gradient-end:     #8BC5A3;  /* Lighter Green */
+
+    --radius: .5rem;
+  }
+
+  /* === DARK THEME ================================================== */
+  .dark {
+    --background:           224 71%  4%;
+    --foreground:           210 20% 98%;
+
+    --card:                 224 71%  7%;
+    --card-foreground:      var(--foreground);
+
+    --popover:              224 71%  7%;
+    --popover-foreground:   var(--foreground);
+
+    --primary:              155 50% 60%;  /* Soft Mint Green for Dark Mode */
+    --primary-foreground:   155 45% 15%;
+
+    --secondary:            145 45% 55%;  /* Complementary Green */
+    --secondary-foreground: 145 50% 15%;
+
+    --muted:                150 15% 18%;  /* Dark Green Tint */
+    --muted-foreground:     210  8% 65%;
+
+    --accent:               160 55% 55%;  /* Accent Green */
+    --accent-foreground:    160 50% 15%;
+
+    --destructive:          346 62% 55%;
+    --destructive-foreground: 224 71% 10%;
+
+    --border:               150 20% 20%;  /* Dark Green Tint */
+    --input:                var(--border);
+    --ring:                 var(--primary);
+  }
+}
+
+/* ------------- GLOBAL RESETS & BASE -------------------------------- */
+
+html,
+body {
+  background-color: hsl(var(--background));
+  color:            hsl(var(--foreground));
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------- TYPOGRAPHY (SELF-HOSTED FONTS) ---------------------- */
+
+/* Assistant */
+@font-face {
+  font-family: 'Assistant';
+  src: url('/fonts/assistant/Assistant-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style:  normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Assistant';
+  src: url('/fonts/assistant/Assistant-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style:  normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Assistant';
+  src: url('/fonts/assistant/Assistant-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style:  normal;
+  font-display: swap;
+}
+
+/* Heebo */
+@font-face {
+  font-family: 'Heebo';
+  src: url('/fonts/heebo/Heebo-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style:  normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Heebo';
+  src: url('/fonts/heebo/Heebo-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style:  normal;
+  font-display: swap;
+}
+
+/* Varela Round */
+@font-face {
+  font-family: 'Varela Round';
+  src: url('/fonts/varela-round/VarelaRound-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style:  normal;
+  font-display: swap;
+}
+
+/* Apply font families via Tailwind tokens */
+@layer base {
+  body              { @apply font-body bg-background text-foreground; font-family: 'Heebo', sans-serif; }
+  h1,h2,h3,h4,h5,h6 { @apply font-heading; font-family: 'Heebo', sans-serif; }
+  button,[role='button'],.btn { @apply font-button; font-family: 'Heebo', sans-serif; }
+  * { @apply border-border; }
+}
+
+/* ------------- ACCESSIBILITY UTILITIES ----------------------------- */
+
+.accessibility-contrast {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+html.accessibility-readable-font,
+html.accessibility-readable-font * {
+  font-family: Arial,'Open Sans',sans-serif !important;
+}
+
+.accessibility-underline-links a { text-decoration: underline !important; }
+
+.accessibility-reduce-motion * {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* WCAG 2.0 AA “contrast mode” */
+.contrast-mode * {
+  background: none !important;
+  background-color: #fff !important;
+  color: #000 !important;
+  box-shadow: none !important;
+  border-color: #000 !important;
+}
+.contrast-mode a { color: #0000EE !important; text-decoration: underline !important; }
+.contrast-mode button,
+.contrast-mode input,
+.contrast-mode select,
+.contrast-mode textarea {
+  background-color: #fff !important;
+  color: #000 !important;
+  border: 1px solid #000 !important;
+}
+.contrast-mode img,
+.contrast-mode video {
+  filter: grayscale(1) contrast(1.2);
+}
+.contrast-mode .decorative,
+.contrast-mode [aria-hidden='true'] { display: none !important; }
+
+/* ------------- SCROLLBAR (THEMED) ---------------------------------- */
+
+::-webkit-scrollbar        { width: 10px; }
+::-webkit-scrollbar-track  { background: hsl(var(--muted)); }
+::-webkit-scrollbar-thumb  { background: hsl(var(--primary)); }
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.8);
+}
+
+/* Hide default controls on <video> (optional) */
+video::-webkit-media-controls { display: none !important; }
