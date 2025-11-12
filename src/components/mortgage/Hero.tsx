@@ -1,7 +1,6 @@
 "use client";
 
 import { Home, RefreshCw, Users } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { scrollToSection } from "@/lib/utils";
 import { trackPathSelection } from "@/lib/analytics";
 import Image from "next/image";
@@ -50,42 +49,45 @@ export default function Hero() {
         </div>
 
         {/* Path Selection Buttons */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 max-w-5xl mx-auto">
-          <Button
+        <div className="flex flex-wrap items-center justify-center gap-4 mt-16">
+          <button
             onClick={() => handlePathSelect("new-mortgage", "new")}
-            size="lg"
-            className="h-28 md:h-36 text-lg md:text-xl font-semibold flex flex-col items-center justify-center gap-4 bg-gradient-to-br from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 min-h-[44px] rounded-2xl border-2 border-primary/20"
+            className="hero-button hero-button-variant-1 hero-button-large"
             aria-label="משכנתא חדשה"
           >
-            <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
-              <Home className="w-8 h-8 md:w-10 md:h-10" aria-hidden="true" />
-            </div>
-            <span>משכנתא חדשה</span>
-          </Button>
+            <span>
+              <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-sm flex items-center justify-center">
+                <Home className="w-4 h-4 md:w-5 md:h-5" aria-hidden="true" />
+              </div>
+              משכנתא חדשה
+            </span>
+          </button>
 
-          <Button
+          <button
             onClick={() => handlePathSelect("refinance-mortgage", "refinance")}
-            size="lg"
-            className="h-28 md:h-36 text-lg md:text-xl font-semibold flex flex-col items-center justify-center gap-4 bg-gradient-to-br from-secondary to-secondary/80 hover:from-secondary/90 hover:to-secondary/70 text-secondary-foreground shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 min-h-[44px] rounded-2xl border-2 border-secondary/20"
+            className="hero-button hero-button-variant-2 hero-button-large"
             aria-label="מחזור משכנתא"
           >
-            <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
-              <RefreshCw className="w-8 h-8 md:w-10 md:h-10" aria-hidden="true" />
-            </div>
-            <span>מחזור משכנתא</span>
-          </Button>
+            <span>
+              <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-sm flex items-center justify-center">
+                <RefreshCw className="w-4 h-4 md:w-5 md:h-5" aria-hidden="true" />
+              </div>
+              מחזור משכנתא
+            </span>
+          </button>
 
-          <Button
+          <button
             onClick={() => handlePathSelect("reverse-mortgage", "reverse")}
-            size="lg"
-            className="h-28 md:h-36 text-lg md:text-xl font-semibold flex flex-col items-center justify-center gap-4 bg-gradient-to-br from-accent to-accent/80 hover:from-accent/90 hover:to-accent/70 text-accent-foreground shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 min-h-[44px] rounded-2xl border-2 border-accent/20"
+            className="hero-button hero-button-variant-3 hero-button-large"
             aria-label="משכנתא הפוכה"
           >
-            <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
-              <Users className="w-8 h-8 md:w-10 md:h-10" aria-hidden="true" />
-            </div>
-            <span>משכנתא הפוכה</span>
-          </Button>
+            <span>
+              <div className="p-1.5 bg-white/20 rounded-lg backdrop-blur-sm flex items-center justify-center">
+                <Users className="w-4 h-4 md:w-5 md:h-5" aria-hidden="true" />
+              </div>
+              משכנתא הפוכה
+            </span>
+          </button>
         </div>
 
         {/* Trust Indicator */}

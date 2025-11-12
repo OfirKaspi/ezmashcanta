@@ -275,3 +275,121 @@ video::-webkit-media-controls { display: none !important; }
   cursor: not-allowed !important;
   background-color: #fff !important;
 }
+
+/* ------------- HERO BUTTON STYLING (Skew Animation) -------------------- */
+/* From Uiverse.io by BHARGAVPATEL1244 - Modified with variants */
+
+.hero-button {
+  outline: none;
+  cursor: pointer;
+  border: none;
+  padding: 0.6rem 1.25rem;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  position: relative;
+  display: inline-block;
+  letter-spacing: 0.05rem;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 500px;
+  overflow: hidden;
+  background: #66ff66;
+  color: ghostwhite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 255, 102, 0.3);
+}
+
+.hero-button span {
+  position: relative;
+  z-index: 10;
+  transition: color 0.4s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-button span > div {
+  transition: transform 0.3s ease;
+}
+
+.hero-button:hover span > div {
+  transform: scale(1.05);
+}
+
+.hero-button:hover span {
+  color: black;
+}
+
+.hero-button::before,
+.hero-button::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-button::before {
+  content: "";
+  background: #000;
+  width: 120%;
+  left: -10%;
+  transform: skew(30deg);
+  transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+.hero-button:hover::before {
+  transform: translate3d(100%, 0, 0);
+}
+
+/* Variant 1: Bright Green (Default) */
+.hero-button-variant-1 {
+  background: #66ff66;
+}
+
+.hero-button-variant-1::before {
+  background: #000;
+}
+
+/* Variant 2: Lighter Green */
+.hero-button-variant-2 {
+  background: #88ff88;
+}
+
+.hero-button-variant-2::before {
+  background: #000;
+}
+
+/* Variant 3: Vibrant Green */
+.hero-button-variant-3 {
+  background: #44ff44;
+}
+
+.hero-button-variant-3::before {
+  background: #000;
+}
+
+/* Large size variant for hero buttons */
+.hero-button-large {
+  padding: 0.65rem 1.4rem;
+  font-size: 15px;
+  min-height: auto;
+  width: auto;
+}
+
+@media (min-width: 768px) {
+  .hero-button-large {
+    padding: 0.7rem 1.5rem;
+    font-size: 16px;
+  }
+}
