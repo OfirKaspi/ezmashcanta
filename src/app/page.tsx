@@ -18,6 +18,7 @@
  * - Responsive design with RTL support (Hebrew)
  */
 import Hero from "@/components/mortgage/Hero";
+import FloatingForm from "@/components/mortgage/FloatingForm";
 import TrustSection from "@/components/mortgage/TrustSection";
 import ServiceSection from "@/components/mortgage/ServiceSection";
 import Testimonials from "@/components/mortgage/Testimonials";
@@ -32,9 +33,10 @@ import Footer from "@/components/layout/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen" role="main">
+    <main className="min-h-screen overflow-x-hidden" role="main">
       <ScrollTracker />
       <Hero />
+      <FloatingForm />
       <TrustSection />
       {/* Service sections with alternating layouts and sticky images */}
       <ServiceSection mortgageType="new" textAlignment="right" />
