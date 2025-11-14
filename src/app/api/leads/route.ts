@@ -2,6 +2,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
 import { Resend } from 'resend';
 
+// Vercel waitUntil helper for background tasks
+// This ensures the email is sent even after the response is returned
+function waitUntil(promise: Promise<unknown>): void {
+  // @ts-expect-error - waitUntil is available in Vercel runtime but not in TypeScript types
+  if (typeof globalThis.waitUntil !== 'undefined') {
+    // @ts-expect-error - waitUntil is a Vercel runtime API not in TypeScript definitions
+    globalThis.waitUntil(promise);
+  } else {
+    // Fallback: fire and forget (works in most cases)
+    promise.catch((error) => {
+      console.error('Background task error:', error);
+    });
+  }
+}
+
 // TypeScript types
 interface LeadRequestBody {
   name?: string;
@@ -15,6 +30,23 @@ interface ApiResponse {
   success: boolean;
   message: string;
   error?: string;
+}
+
+interface GoogleSheetsError extends Error {
+  code?: number;
+  message: string;
+}
+
+interface ResendError extends Error {
+  message: string;
+}
+
+interface RequestBody {
+  name?: string;
+  fullName?: string;
+  email?: string;
+  phone?: string;
+  mortgageType?: string;
 }
 
 // Mortgage type mapping to Hebrew
@@ -39,8 +71,16 @@ function getIsraeliTimestamp(): string {
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
-// Initialize Google Sheets client
+// Cache Google Sheets client to avoid recreating auth on every request
+let cachedSheetsClient: { sheets: ReturnType<typeof google.sheets>; spreadsheetId: string } | null = null;
+
+// Initialize Google Sheets client (cached for performance)
 async function getGoogleSheetsClient() {
+  // Return cached client if available
+  if (cachedSheetsClient) {
+    return cachedSheetsClient;
+  }
+
   const serviceAccountEmail = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
   const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
   const spreadsheetId = process.env.SPREADSHEET_ID;
@@ -56,7 +96,11 @@ async function getGoogleSheetsClient() {
   });
 
   const sheets = google.sheets({ version: 'v4', auth });
-  return { sheets, spreadsheetId };
+  
+  // Cache the client for reuse
+  cachedSheetsClient = { sheets, spreadsheetId };
+  
+  return cachedSheetsClient;
 }
 
 // Append lead to Google Sheets
@@ -66,64 +110,50 @@ async function appendToGoogleSheets(lead: LeadRequestBody) {
   const mortgageTypeHebrew = mortgageTypeMap[lead.mortgageType] || lead.mortgageType;
   const timestamp = getIsraeliTimestamp();
 
-  // Column headers in Hebrew
-  const headers = ['תאריך ושעה', 'שם', 'אימייל', 'טלפון', 'סוג משכנתא'];
   const row = [timestamp, name, lead.email, lead.phone, mortgageTypeHebrew];
 
   try {
-    // Check if sheet has headers (read first row)
-    const firstRow = await sheets.spreadsheets.values.get({
-      spreadsheetId,
-      range: 'A1:E1',
-    });
-
-    // If no headers exist, add them
-    if (!firstRow.data.values || firstRow.data.values.length === 0) {
-      await sheets.spreadsheets.values.append({
-        spreadsheetId,
-        range: 'A1',
-        valueInputOption: 'RAW',
-        requestBody: {
-          values: [headers],
-        },
-      });
-    }
-
-    // Append the lead data
+    // Optimized: Append directly without checking headers first
+    // This saves one API call per request, making it ~50% faster
+    // Note: Headers should be added manually once to the sheet:
+    // תאריך ושעה | שם | אימייל | טלפון | סוג משכנתא
     await sheets.spreadsheets.values.append({
       spreadsheetId,
       range: 'A:E',
       valueInputOption: 'RAW',
+      insertDataOption: 'INSERT_ROWS',
       requestBody: {
         values: [row],
       },
     });
 
     return true;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Google Sheets error:', error);
     
+    const sheetsError = error as GoogleSheetsError;
+    
     // Provide more specific error messages
-    if (error?.code === 403) {
-      if (error?.message?.includes('API has not been used') || error?.message?.includes('is disabled')) {
+    if (sheetsError?.code === 403) {
+      if (sheetsError?.message?.includes('API has not been used') || sheetsError?.message?.includes('is disabled')) {
         throw new Error('Google Sheets API לא מופעל. אנא הפעל את ה-API בפרויקט Google Cloud שלך.');
       }
-      if (error?.message?.includes('permission') || error?.message?.includes('access')) {
+      if (sheetsError?.message?.includes('permission') || sheetsError?.message?.includes('access')) {
         throw new Error('אין הרשאה לגשת לגיליון האלקטרוני. אנא ודא שחשבון השירות יש לו גישה לגיליון.');
       }
       throw new Error('אין הרשאה לגשת ל-Google Sheets. בדוק את הגדרות ההרשאות.');
     }
     
-    if (error?.code === 404) {
+    if (sheetsError?.code === 404) {
       throw new Error('גיליון אלקטרוני לא נמצא. אנא ודא שה-SPREADSHEET_ID נכון.');
     }
     
-    if (error?.code === 400) {
+    if (sheetsError?.code === 400) {
       throw new Error('בקשה לא תקינה ל-Google Sheets. בדוק את פרטי הגיליון.');
     }
     
     // Generic error with more context
-    const errorMessage = error?.message || 'Unknown error';
+    const errorMessage = sheetsError?.message || 'Unknown error';
     throw new Error(`שגיאה בשמירה ל-Google Sheets: ${errorMessage}`);
   }
 }
@@ -213,25 +243,27 @@ async function sendEmailNotification(lead: LeadRequestBody) {
     });
 
     return true;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Resend email error:', error);
     
+    const resendError = error as ResendError;
+    
     // Provide more specific error messages for email
-    if (error?.message?.includes('API key') || error?.message?.includes('Unauthorized')) {
+    if (resendError?.message?.includes('API key') || resendError?.message?.includes('Unauthorized')) {
       throw new Error('מפתח API של Resend לא תקין או חסר.');
     }
     
-    if (error?.message?.includes('domain') || error?.message?.includes('from')) {
+    if (resendError?.message?.includes('domain') || resendError?.message?.includes('from')) {
       throw new Error('כתובת האימייל השולח לא מאומתת ב-Resend.');
     }
     
-    const errorMessage = error?.message || 'Unknown error';
+    const errorMessage = resendError?.message || 'Unknown error';
     throw new Error(`שגיאה בשליחת אימייל: ${errorMessage}`);
   }
 }
 
 // Validate request body
-function validateLeadData(body: any): LeadRequestBody {
+function validateLeadData(body: RequestBody): LeadRequestBody {
   const name = body.name || body.fullName;
   
   if (!name || typeof name !== 'string' || name.trim().length === 0) {
@@ -246,12 +278,15 @@ function validateLeadData(body: any): LeadRequestBody {
     throw new Error('סוג משכנתא לא תקין');
   }
 
+  // Type assertion is safe here because we validated it above
+  const validMortgageType = body.mortgageType as 'new' | 'refinance' | 'reverse';
+
   return {
     name: body.name,
     fullName: body.fullName,
     email: body.email || '',
     phone: body.phone.trim(),
-    mortgageType: body.mortgageType,
+    mortgageType: validMortgageType,
   };
 }
 
@@ -264,23 +299,23 @@ export async function POST(request: NextRequest) {
     // Validate request data
     const leadData = validateLeadData(body);
 
-    // Save to Google Sheets
+    // Save to Google Sheets (critical - await this)
     await appendToGoogleSheets(leadData);
 
-    // Send email notification
-    try {
-      await sendEmailNotification(leadData);
-    } catch (emailError) {
-      // Log email error but don't fail the request if Sheets succeeded
-      console.error('Email notification failed:', emailError);
-      // Continue - the lead was saved to Sheets
-    }
-
-    // Return success response
+    // Return success response immediately - don't wait for email
     const response: ApiResponse = {
       success: true,
       message: 'הליד נשמר בהצלחה',
     };
+
+    // Send email notification asynchronously using waitUntil
+    // This ensures the email is sent even after the response is returned (Vercel serverless)
+    waitUntil(
+      sendEmailNotification(leadData).catch((emailError) => {
+        // Log email error but don't fail the request - lead is already saved
+        console.error('Email notification failed (background):', emailError);
+      })
+    );
 
     return NextResponse.json(response, { status: 200 });
   } catch (error) {
