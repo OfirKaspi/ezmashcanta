@@ -37,19 +37,23 @@ const RootLayout = async ({ children, }: Readonly<{ children: React.ReactNode }>
           name="keywords"
           content="ייעוץ משכנתאות, משכנתא חדשה, מחזור משכנתא, משכנתא הפוכה, יועץ משכנתאות, תמהיל משכנתא, חיסכון במשכנתא"
         />
-        <meta property="og:title" content="בשביל המשכנתא | ייעוץ משכנתאות מקצועי" />
+        <meta property="og:title" content="בשביל המשכנתא | ייעוץ משכנתאות מקצועי - משכנתא חדשה, מחזור, משכנתא הפוכה" />
         <meta
           property="og:description"
           content="ייעוץ משכנתאות מקצועי שיחסוך לכם עשרות אלפי שקלים. משכנתא חדשה, מחזור משכנתא, משכנתא הפוכה. ללא עלות וללא התחייבות."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="https://yourdomain.com/mortgage-og-image.png" />
+        <meta property="og:image" content="https://res.cloudinary.com/dudwjf2pu/image/upload/v1763137327/BishvilHamashkanta/og_image_cpm00s.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="בשביל המשכנתא - ייעוץ משכנתאות מקצועי" />
         <meta property="og:locale" content="he_IL" />
-        <meta property="og:url" content="https://yourdomain.com" />
+        <meta property="og:url" content={process.env.NEXT_PUBLIC_SITE_URL || "https://yourdomain.com"} />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="canonical" href="https://yourdomain.com" />
+        <meta name="twitter:title" content="בשביל המשכנתא | ייעוץ משכנתאות מקצועי" />
+        <meta name="twitter:description" content="ייעוץ משכנתאות מקצועי שיחסוך לכם עשרות אלפי שקלים. משכנתא חדשה, מחזור משכנתא, משכנתא הפוכה. ללא עלות וללא התחייבות." />
+        <meta name="twitter:image" content="https://res.cloudinary.com/dudwjf2pu/image/upload/v1763137327/BishvilHamashkanta/og_image_cpm00s.png" />
+        <link rel="canonical" href={process.env.NEXT_PUBLIC_SITE_URL || "https://yourdomain.com"} />
         <link
           rel="icon"
           href="/favicon.ico"
