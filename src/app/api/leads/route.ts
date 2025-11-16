@@ -34,7 +34,7 @@ interface LeadRequestBody {
   fullName?: string; // For backward compatibility
   email: string;
   phone: string;
-  mortgageType: 'new' | 'refinance' | 'reverse';
+  mortgageType: 'new' | 'refinance' | 'reverse' | 'other';
 }
 
 interface ApiResponse {
@@ -57,6 +57,7 @@ const mortgageTypeMap: Record<string, string> = {
   new: 'משכנתא חדשה',
   refinance: 'מחזור משכנתא',
   reverse: 'משכנתא הפוכה',
+  other: 'אחר',
 };
 
 // Get Israeli timestamp in Hebrew format
@@ -333,7 +334,7 @@ function validateAndSanitizeLeadData(body: unknown): LeadRequestBody {
   }
   
   // Validate mortgage type
-  if (!['new', 'refinance', 'reverse'].includes(data.mortgageType)) {
+  if (!['new', 'refinance', 'reverse', 'other'].includes(data.mortgageType)) {
     throw new Error('סוג משכנתא לא תקין');
   }
   
@@ -342,7 +343,7 @@ function validateAndSanitizeLeadData(body: unknown): LeadRequestBody {
     fullName: sanitizedName,
     email: sanitizedEmail,
     phone: sanitizedPhone,
-    mortgageType: data.mortgageType as 'new' | 'refinance' | 'reverse',
+    mortgageType: data.mortgageType as 'new' | 'refinance' | 'reverse' | 'other',
   };
 }
 

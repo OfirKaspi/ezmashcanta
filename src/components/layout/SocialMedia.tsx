@@ -5,11 +5,15 @@ import { redirectToPlatform } from "@/utils/redirectToPlatform";
 import OptimizedImage from "@/components/common/OptimizedImage";
 
 const SocialMedia = () => {
-  const { whatsappNumber, facebookUsername, instagramUsername } = CONFIG
+  const { 
+    whatsappNumber, 
+    facebookUsername, 
+    // instagramUsername 
+  } = CONFIG
 
   const whatsappUrl = `https://wa.me/${whatsappNumber}`;
   const facebookUrl = `https://www.facebook.com/${facebookUsername}`;
-  const instagramUrl = `https://www.instagram.com/${instagramUsername}`;
+  // const instagramUrl = `https://www.instagram.com/${instagramUsername}`;
 
   const socials = [
     { 
@@ -17,11 +21,11 @@ const SocialMedia = () => {
       href: facebookUrl,
       label: "עקבו אחרינו בפייסבוק"
     },
-    { 
-      name: "instagram", 
-      href: instagramUrl,
-      label: "עקבו אחרינו באינסטגרם"
-    },
+    // { 
+    //   name: "instagram", 
+    //   href: instagramUrl,
+    //   label: "עקבו אחרינו באינסטגרם"
+    // },
     { 
       name: "whatsapp", 
       href: whatsappUrl,

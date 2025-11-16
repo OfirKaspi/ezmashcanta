@@ -30,70 +30,96 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              className="group bg-background p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-border/50 hover:border-primary/30 hover:-translate-y-1"
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              variants={createVariants({ type: "slideUp", duration: 0.8, delay: 0.5 + index * 0.15 })}
-              whileHover={{ y: -5, transition: { duration: 0.3 } }}
-            >
-              {/* Rating */}
-              <div className="flex gap-1 mb-6">
-                {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-5 h-5 fill-yellow-400 text-yellow-400 drop-shadow-sm"
-                  />
-                ))}
-              </div>
-
-              {/* Name and Segment */}
-              <div className="mb-6 pb-4 border-b border-border/50">
-                <h3 className="font-semibold text-lg text-foreground mb-2">
-                  {testimonial.name}
-                </h3>
-                <p className="text-sm text-primary font-medium">
-                  {content.segmentLabels[testimonial.segment]}
-                </p>
-              </div>
-
-              {/* Before */}
-              <div className="mb-6 pb-6 border-b border-red-200/50 dark:border-red-800/30">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-2 h-2 bg-red-500 rounded-full" />
-                  <p className="text-xs font-semibold text-red-600 dark:text-red-400 uppercase tracking-wide">
-                    {content.beforeLabel}
-                  </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {testimonials.map((testimonial, index) => {
+            const isFullText = 'text' in testimonial && !('before' in testimonial);
+            
+            return (
+              <motion.div
+                key={index}
+                className="group bg-background p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-border/50 hover:border-primary/30 hover:-translate-y-1"
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                variants={createVariants({ type: "slideUp", duration: 0.8, delay: 0.5 + index * 0.15 })}
+                whileHover={{ y: -5, transition: { duration: 0.3 } }}
+              >
+                {/* Rating */}
+                <div className="flex gap-1 mb-6">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="w-5 h-5 fill-yellow-400 text-yellow-400 drop-shadow-sm"
+                    />
+                  ))}
                 </div>
-                <p className="text-sm text-foreground leading-relaxed italic">
-                  &ldquo;{testimonial.before}&rdquo;
-                </p>
-              </div>
 
-              {/* After */}
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-2 h-2 bg-primary rounded-full" />
-                  <p className="text-xs font-semibold text-primary uppercase tracking-wide">
-                    {content.afterLabel}
-                  </p>
+                {/* Name and Segment */}
+                <div className="mb-6 pb-4 border-b border-border/50">
+                  <h3 className="font-semibold text-lg text-foreground mb-2">
+                    {testimonial.name}
+                  </h3>
+                  {testimonial.segment && (
+                    <p className="text-sm text-primary font-medium">
+                      {content.segmentLabels[testimonial.segment]}
+                    </p>
+                  )}
                 </div>
-                <p className="text-sm text-foreground leading-relaxed">{testimonial.after}</p>
-              </div>
 
-              {/* Savings */}
-              {testimonial.savings && (
-                <div className="mt-6 pt-6 border-t border-primary/20 bg-gradient-to-r from-primary/5 to-transparent rounded-lg p-4">
-                  <p className="text-base font-bold text-primary text-center">
-                    {testimonial.savings}
-                  </p>
-                </div>
-              )}
-            </motion.div>
-          ))}
+                {isFullText ? (
+                  /* Full Text Format */
+                  <div className="mb-6">
+                    <p className="text-sm text-foreground leading-relaxed whitespace-pre-line">
+                      {testimonial.text}
+                    </p>
+                  </div>
+                ) : (
+                  /* Before/After Format */
+                  (() => {
+                    if ('before' in testimonial && 'after' in testimonial) {
+                      const beforeAfterTestimonial = testimonial as { before: string; after: string };
+                      return (
+                        <>
+                          {/* Before */}
+                          <div className="mb-6 pb-6 border-b border-red-200/50 dark:border-red-800/30">
+                            <div className="flex items-center gap-2 mb-3">
+                              <div className="w-2 h-2 bg-red-500 rounded-full" />
+                              <p className="text-xs font-semibold text-red-600 dark:text-red-400 uppercase tracking-wide">
+                                {content.beforeLabel}
+                              </p>
+                            </div>
+                            <p className="text-sm text-foreground leading-relaxed italic">
+                              &ldquo;{beforeAfterTestimonial.before}&rdquo;
+                            </p>
+                          </div>
+
+                          {/* After */}
+                          <div className="mb-6">
+                            <div className="flex items-center gap-2 mb-3">
+                              <div className="w-2 h-2 bg-green-500 rounded-full" />
+                              <p className="text-xs font-semibold text-primary uppercase tracking-wide">
+                                {content.afterLabel}
+                              </p>
+                            </div>
+                            <p className="text-sm text-foreground leading-relaxed">{beforeAfterTestimonial.after}</p>
+                          </div>
+                        </>
+                      );
+                    }
+                    return null;
+                  })()
+                )}
+
+                {/* Savings */}
+                {'savings' in testimonial && (testimonial as { savings: string }).savings && (
+                  <div className="mt-6 pt-6 border-t border-primary/20 bg-gradient-to-r from-primary/5 to-transparent rounded-lg p-4">
+                    <p className="text-base font-bold text-primary text-center">
+                      {(testimonial as { savings: string }).savings}
+                    </p>
+                  </div>
+                )}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

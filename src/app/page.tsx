@@ -13,7 +13,7 @@
  * - Fixed bottom banner for lead capture
  * 
  * Design features:
- * - Soft mint/sage green theme throughout
+ * - Soft light blue theme throughout
  * - Modern card-based UI with gradients and shadows
  * - Real Unsplash images in service sections
  * - Responsive design with RTL support (Hebrew)

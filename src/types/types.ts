@@ -27,7 +27,7 @@ export interface ImageSectionType extends Image, Paragraph {
   buttonText?: string; // Optional field for button text
 }
 
-export type MortgageType = 'new' | 'refinance' | 'reverse';
+export type MortgageType = 'new' | 'refinance' | 'reverse' | 'other';
 
 export interface LeadFormData {
   fullName: string;

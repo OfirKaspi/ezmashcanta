@@ -13,29 +13,29 @@
     --popover:              0   0% 100%;
     --popover-foreground:   var(--foreground);
 
-    --primary:              155 45% 55%;  /* Soft Mint/Sage Green */
+    --primary:              195 45% 55%;  /* Soft Light Blue */
     --primary-foreground:   0   0% 100%;
 
-    --secondary:            145 50% 50%;  /* Complementary Green */
+    --secondary:            195 50% 50%;  /* Complementary Light Blue */
     --secondary-foreground: 0   0% 100%;
 
-    --muted:                150 25% 97%;  /* Very Light Green Tint */
+    --muted:                195 25% 97%;  /* Very Light Blue Tint */
     --muted-foreground:     222  8% 45%;
 
-    --muted-custom:         150 25% 97%;  /* Very Light Green Tint */
+    --muted-custom:         195 25% 97%;  /* Very Light Blue Tint */
 
-    --accent:               160 55% 50%;  /* Accent Green */
+    --accent:               200 55% 50%;  /* Accent Light Blue */
     --accent-foreground:    0   0% 100%;
 
     --destructive:          346 77% 48%;
     --destructive-foreground: 0 0% 100%;
 
-    --border:               150 20% 92%;  /* Light Green Tint */
+    --border:               195 20% 92%;  /* Light Blue Tint */
     --input:                var(--border);
     --ring:                 var(--primary);
 
-    --cta-gradient-start:   #6BAF8E;  /* Soft Green */
-    --cta-gradient-end:     #8BC5A3;  /* Lighter Green */
+    --cta-gradient-start:   #6BA8C5;  /* Soft Light Blue */
+    --cta-gradient-end:     #8BC5D4;  /* Lighter Light Blue */
 
     --radius: .5rem;
   }
@@ -51,22 +51,22 @@
     --popover:              224 71%  7%;
     --popover-foreground:   var(--foreground);
 
-    --primary:              155 50% 60%;  /* Soft Mint Green for Dark Mode */
-    --primary-foreground:   155 45% 15%;
+    --primary:              195 50% 60%;  /* Soft Light Blue for Dark Mode */
+    --primary-foreground:   195 45% 15%;
 
-    --secondary:            145 45% 55%;  /* Complementary Green */
-    --secondary-foreground: 145 50% 15%;
+    --secondary:            195 45% 55%;  /* Complementary Light Blue */
+    --secondary-foreground: 195 50% 15%;
 
-    --muted:                150 15% 18%;  /* Dark Green Tint */
+    --muted:                195 15% 18%;  /* Dark Light Blue Tint */
     --muted-foreground:     210  8% 65%;
 
-    --accent:               160 55% 55%;  /* Accent Green */
-    --accent-foreground:    160 50% 15%;
+    --accent:               200 55% 55%;  /* Accent Light Blue */
+    --accent-foreground:    200 50% 15%;
 
     --destructive:          346 62% 55%;
     --destructive-foreground: 224 71% 10%;
 
-    --border:               150 20% 20%;  /* Dark Green Tint */
+    --border:               195 20% 20%;  /* Dark Light Blue Tint */
     --input:                var(--border);
     --ring:                 var(--primary);
   }
@@ -249,13 +249,13 @@ textarea[dir="rtl"]::placeholder {
   }
 }
 
-/* ------------- FORM BUTTON STYLING (Bright Green) -------------------- */
-/* From Uiverse.io by Spacious74 - Modified with bright green colors */
+/* ------------- FORM BUTTON STYLING (Light Blue) -------------------- */
+/* From Uiverse.io by Spacious74 - Modified with light blue colors */
 
 .form-button-container {
   position: relative;
   padding: 3px;
-  background: linear-gradient(90deg, #00ff88, #00ff66);
+  background: linear-gradient(90deg, #66ccff, #4db8ff);
   border-radius: 0.9em;
   transition: all 0.4s ease;
   display: inline-block;
@@ -277,13 +277,13 @@ textarea[dir="rtl"]::placeholder {
   z-index: -1;
   filter: blur(0);
   transition: filter 0.4s ease;
-  background: linear-gradient(90deg, #00ff88, #00ff66);
+  background: linear-gradient(90deg, #66ccff, #4db8ff);
   opacity: 0;
   pointer-events: none;
 }
 
 .form-button-container:hover::before {
-  background: linear-gradient(90deg, #00ff88, #00ff66);
+  background: linear-gradient(90deg, #66ccff, #4db8ff);
   filter: blur(1.2em);
   opacity: 1;
 }
@@ -371,7 +371,7 @@ textarea[dir="rtl"]::placeholder {
   font-size: 13px;
   border-radius: 500px;
   overflow: hidden;
-  background: #66ff66;
+  background: #66ccff;
   color: ghostwhite;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -399,7 +399,7 @@ textarea[dir="rtl"]::placeholder {
 
 .hero-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(102, 255, 102, 0.3);
+  box-shadow: 0 8px 16px rgba(102, 204, 255, 0.3);
 }
 
 .hero-button span {
@@ -450,31 +450,31 @@ textarea[dir="rtl"]::placeholder {
   transform: translate3d(100%, 0, 0);
 }
 
-/* Variant 1: Bright Green (Default) */
+/* Variant 1: Light Blue (Default) */
 .hero-button-variant-1 {
-  background: #66ff66;
+  background: #66ccff;
 }
 
 .hero-button-variant-1::before {
-  background: #006b24;
+  background: #004d66;
 }
 
-/* Variant 2: Lighter Green */
+/* Variant 2: Lighter Light Blue */
 .hero-button-variant-2 {
-  background: #88ff88;
+  background: #88d4ff;
 }
 
 .hero-button-variant-2::before {
-  background: #006b24;
+  background: #004d66;
 }
 
-/* Variant 3: Vibrant Green */
+/* Variant 3: Vibrant Light Blue */
 .hero-button-variant-3 {
-  background: #44ff44;
+  background: #44b3ff;
 }
 
 .hero-button-variant-3::before {
-  background: #006b24;
+  background: #004d66;
 }
 
 /* Large size variant for hero buttons */
@@ -510,11 +510,11 @@ textarea[dir="rtl"]::placeholder {
 
 /* Hero headline second row glow - reduced on mobile */
 .hero-second-row-glow {
-  filter: drop-shadow(0 0 10px rgba(107, 175, 142, 0.4)) drop-shadow(0 0 20px rgba(107, 175, 142, 0.3)) drop-shadow(0 0 40px rgba(107, 175, 142, 0.2)) drop-shadow(0 0 60px rgba(107, 175, 142, 0.15));
+  filter: drop-shadow(0 0 6px rgba(107, 168, 197, 0.2)) drop-shadow(0 0 12px rgba(107, 168, 197, 0.15)) drop-shadow(0 0 24px rgba(107, 168, 197, 0.1));
 }
 
 @media (max-width: 768px) {
   .hero-second-row-glow {
-    filter: drop-shadow(0 0 5px rgba(107, 175, 142, 0.25)) drop-shadow(0 0 10px rgba(107, 175, 142, 0.15)) drop-shadow(0 0 20px rgba(107, 175, 142, 0.1));
+    filter: drop-shadow(0 0 3px rgba(107, 168, 197, 0.15)) drop-shadow(0 0 6px rgba(107, 168, 197, 0.1)) drop-shadow(0 0 12px rgba(107, 168, 197, 0.06));
   }
 }

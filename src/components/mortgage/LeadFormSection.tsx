@@ -65,7 +65,7 @@ export default function LeadFormSection() {
                   animate={isInView ? "visible" : "hidden"}
                   variants={createVariants({ type: "fadeUp", duration: 0.7, delay: 0.7 + index * 0.15 })}
                 >
-                  <div className="w-2 h-2 bg-primary rounded-full" />
+                  <div className="w-2 h-2 bg-green-500 rounded-full" />
                   <span>{indicator}</span>
                 </motion.div>
               ))}

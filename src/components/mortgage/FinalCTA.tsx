@@ -45,7 +45,7 @@ export default function FinalCTA() {
                 animate={isInView ? "visible" : "hidden"}
                 variants={createVariants({ type: "fadeUp", duration: 0.7, delay: 0.5 + index * 0.15 })}
               >
-                <div className="w-2 h-2 bg-primary rounded-full" />
+                <div className="w-2 h-2 bg-green-500 rounded-full" />
                 <span>{indicator}</span>
               </motion.div>
             ))}
@@ -117,7 +117,7 @@ export default function FinalCTA() {
                   variants={createVariants({ type: "slideUp", duration: 0.7, delay: 0.9 + index * 0.15 })}
                 >
                   <div className="mt-1 p-1.5 bg-primary/20 rounded-lg">
-                    <div className="w-2 h-2 bg-primary rounded-full" />
+                    <div className="w-2 h-2 bg-green-500 rounded-full" />
                   </div>
                   <span className="text-sm text-muted-foreground leading-relaxed flex-1">{item}</span>
                 </motion.li>

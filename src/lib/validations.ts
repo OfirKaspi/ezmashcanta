@@ -46,7 +46,7 @@ export const leadFormSchema = z.object({
     .string()
     .max(MAX_LENGTHS.MORTGAGE_TYPE, `סוג משכנתא לא יכול להכיל יותר מ-${MAX_LENGTHS.MORTGAGE_TYPE} תווים`)
     .refine(
-      (val) => ['new', 'refinance', 'reverse'].includes(val),
+      (val) => ['new', 'refinance', 'reverse', 'other'].includes(val),
       { message: 'אנא בחר סוג משכנתא' }
     ),
   
@@ -120,7 +120,7 @@ export const serverLeadSchema = z.object({
     .string()
     .max(MAX_LENGTHS.MORTGAGE_TYPE)
     .refine(
-      (val) => ['new', 'refinance', 'reverse'].includes(val),
+      (val) => ['new', 'refinance', 'reverse', 'other'].includes(val),
       { message: 'סוג משכנתא לא תקין' }
     ),
   

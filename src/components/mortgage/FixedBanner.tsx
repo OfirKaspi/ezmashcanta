@@ -48,11 +48,11 @@ export default function FixedBanner() {
 
             <div className="hidden sm:flex items-center gap-2 md:gap-4 text-[10px] sm:text-xs text-muted-foreground">
               <div className="flex items-center gap-1 sm:gap-1.5">
-                <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-primary rounded-full" />
+                <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-green-500 rounded-full" />
                 <span>{content.trustIndicators.noCost}</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-1.5">
-                <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-primary rounded-full" />
+                <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-green-500 rounded-full" />
                 <span>{content.trustIndicators.noCommitment}</span>
               </div>
             </div>

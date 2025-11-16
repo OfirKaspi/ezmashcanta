@@ -99,16 +99,17 @@ export default function Hero() {
                   </span>
                 );
               } else {
-                // Second row - green gradient with glow
+                // Second row - light blue gradient with glow
                 return (
                   <span 
                     key={index} 
                     className={`block ${glowReady ? 'hero-second-row-glow' : ''}`}
                     style={{
-                      background: 'linear-gradient(to right, hsl(155, 45%, 35%), hsl(155, 45%, 50%), hsl(155, 45%, 35%))',
+                      background: 'linear-gradient(to right, hsl(195, 50%, 40%), hsl(195, 50%, 55%), hsl(195, 50%, 40%))',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
+                      color: 'transparent',
                       marginTop: '0.5rem',
                       willChange: 'transform, opacity, filter',
                       transform: 'translateZ(0)',
@@ -179,7 +180,7 @@ export default function Hero() {
               animate={shouldAnimate ? "visible" : "hidden"}
               variants={createVariants({ type: "fadeUp", duration: 0.8, delay: 1.1 + index * 0.15 })}
             >
-              <div className="w-2 h-2 bg-primary rounded-full" />
+              <div className="w-2 h-2 bg-green-500 rounded-full" />
               <span>{indicator}</span>
             </motion.div>
           ))}

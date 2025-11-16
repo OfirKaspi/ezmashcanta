@@ -255,6 +255,7 @@ export default function LeadForm({
               <SelectItem value="new">{content.mortgageTypeOptions.new}</SelectItem>
               <SelectItem value="refinance">{content.mortgageTypeOptions.refinance}</SelectItem>
               <SelectItem value="reverse">{content.mortgageTypeOptions.reverse}</SelectItem>
+              <SelectItem value="other">{content.mortgageTypeOptions.other}</SelectItem>
             </SelectContent>
           </Select>
           {errors.mortgageType && (
