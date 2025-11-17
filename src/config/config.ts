@@ -3,8 +3,8 @@ export const CONFIG = {
   GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID || "",
 
   // GENERAL DETAILS
-  facebookUsername: "the.levelup.agency",
-  instagramUsername: "the.levelup.agency",
+  facebookUsername: "profile.php?id=61583860563575",
+  // instagramUsername: "the.levelup.agency",
   whatsappNumber: "972509007479",
   phoneNumber: "0509007479",
   contactEmail: "ezmashcanta@gmail.com",
